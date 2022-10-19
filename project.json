@@ -1,0 +1,53 @@
+{
+	"contentrating" : "Mature",
+	"description" : "绯色修仙录[网页版]全CG\n我魔改了一下修复了作者的CG报错问题和一些贴图无法消失的问题\n(*╹▽╹*)如果喜欢可以去爱发电搜索:月亮找到作者去支持正版吧",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"newproperty" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "颜色,背景",
+				"type" : "color",
+				"value" : "1 0 0"
+			},
+			"newproperty1" : 
+			{
+				"fraction" : true,
+				"index" : 1,
+				"max" : 1,
+				"min" : 0,
+				"order" : 101,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "滑块",
+				"type" : "slider",
+				"value" : 1
+			},
+			"newproperty2" : 
+			{
+				"index" : 2,
+				"mode" : "ondemand",
+				"order" : 102,
+				"text" : "目录",
+				"type" : "directory",
+				"value" : ""
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Game" ],
+	"title" : "绯色修仙录[0.386]网页版[全CG]",
+	"type" : "web",
+	"version" : 0
+}
