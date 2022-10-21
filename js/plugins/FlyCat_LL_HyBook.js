@@ -15,8 +15,8 @@
  * @type file
  * 
  * @param hyStageVariable
- * @text 怀孕阶段变量Id
- * @desc 1为初始（1,2,3,4,5,6种）
+ * @text 怀孕月份变量Id
+ * @desc 
  * @type variable
  * 
  * @help
@@ -74,36 +74,25 @@ Window_HyBook.prototype.initialize = function (rect) {
     this.refresh();
 };
 Window_HyBook.prototype.refresh = function () {
-    //  const value = FlyCat.LL_HyBook.hyStageVariable ? $gameVariables.value(FlyCat.LL_HyBook.hyStageVariable) : 0;
-    if (!$gameSystem._actorStepNumber) {
-        var value = 1;
+    var value = FlyCat.LL_HyBook.hyStageVariable ? $gameVariables.value(FlyCat.LL_HyBook.hyStageVariable) : 0;
+    if (value <= 2) {
+        var img = '子宫横切面1'
     }
-    else {
-        if ($gameSystem._actorStepNumber < 500) {
-            var value = 1;
-        }
-        else if ($gameSystem._actorStepNumber < 1000) {
-            var value = 2;
-        }
-        else if ($gameSystem._actorStepNumber < 1500) {
-            var value = 3;
-        }
-        else if ($gameSystem._actorStepNumber < 2000) {
-            var value = 4;
-        }
-        else if ($gameSystem._actorStepNumber < 2500) {
-            var value = 5;
-        }
-        else {
-            var value = 6;
-        }
+    else if (value <= 4) {
+        var img = '子宫横切面3';
     }
-    if (value <= 1) var img = '子宫横切面1';
-    if (value == 2) var img = '子宫横切面2';
-    if (value == 3) var img = '子宫横切面3';
-    if (value == 4) var img = '子宫横切面4';
-    if (value == 5) var img = '子宫横切面5';
-    if (value >= 6) var img = '子宫横切面6';
+    else if (value <= 6) {
+        var img = '子宫横切面4'
+    }
+    else if (value <= 8) {
+        var img = '子宫横切面5'
+    }
+    else if (value <= 10) {
+        var img = '子宫横切面6'
+    }
+    else if (value <= 12) {
+        var img = '子宫横切面6'
+    }
     this._bookHySprite.bitmap = ImageManager.loadBitmap('img/menu/', img);
     this._bookHySprite.x = 0;
     this._bookHySprite.y = 0;

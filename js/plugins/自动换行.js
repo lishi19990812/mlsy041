@@ -1,8 +1,8 @@
 ﻿/*:
  * @plugindesc 自动换行
- * @author FlyRoc  
+ * @author FlyRoc
  * @target MZ
- * @help 
+ * @help
  * 实现自动换行小功能。
  */
 Window_Base.prototype.processCharacter = function (textState) {
@@ -12,8 +12,14 @@ Window_Base.prototype.processCharacter = function (textState) {
         this.processControlCharacter(textState, c);
     } else {
         textState.buffer += c;
-        if (textState.x + this.textWidth(c) >= this.innerWidth) {
+        if (textState.text) {
+            var jc = textState.text.match(/RE/i);
+        } else {
+            var jc = null;
+        }
+        if (textState.x + this.textWidth(c) >= this.innerWidth && jc == null) {
             this.processNewLine(textState);
         }
     }
 };
+

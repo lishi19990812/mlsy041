@@ -335,9 +335,9 @@ Scene_Map.prototype.update = function () {
     }
     if ($gameSystem._questButtonVisible == true) {
         this._questButton.visible = true;
-        if (Input.isTriggered('q')) {
-            this.openMiniquest();
-        }
+        // if (Input.isTriggered('q')) {
+        //     this.openMiniquest();
+        // }
     }
 
 }

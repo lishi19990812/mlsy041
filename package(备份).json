@@ -1,0 +1,12 @@
+{
+    "name": "rmmz-game",
+    "main": "index.html",
+    "chromium-args": "--force-color-profile=srgb",
+    "window": {
+        "title": "（041搬运）绯色修仙录V0.4143",
+        "width": 1280,
+        "height": 720,
+        "position": "center",
+        "icon": "icon/icon.png"
+    }
+}

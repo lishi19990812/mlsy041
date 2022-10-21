@@ -21,7 +21,7 @@ ConfigManager.HideMapCg = true;
 FlyCat.HideMapCg.Window_Options_addGeneralOptions = Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function () {
     FlyCat.HideMapCg.Window_Options_addGeneralOptions.call(this);
-    this.addCommand('地图CG开关', "HideMapCg", true);
+    //   this.addCommand('地图CG开关', "HideMapCg", true);
 };
 FlyCat.HideMapCg.Window_Options_processOk = Window_Options.prototype.processOk;
 Window_Options.prototype.processOk = function () {
@@ -56,5 +56,5 @@ Window_Options.prototype.booleanStatusText = function (value) {
 };
 Scene_Options.prototype.maxCommands = function () {
     // Increase this value when adding option items.
-    return 8;
+    return 7;
 };

@@ -6,6 +6,12 @@
  * @target MZ
  * @plugindesc v1.0.0 FlyCat-<标题场景修改>
  * @author FlyCat
+ * 
+ * @param URL
+ * @text 网址
+ * @desc 网址
+ * @default 
+
  * @help
  */
 var Imported = Imported || {};
@@ -14,6 +20,7 @@ Imported.FlyCat_SceneTitle = true;
 var FlyCat = FlyCat || {};
 FlyCat.SceneTitle = {};
 FlyCat.SceneTitle.parameters = PluginManager.parameters('FlyCat_SceneTitle');
+FlyCat.SceneTitle.URL = String(FlyCat.SceneTitle.parameters['URL']);
 
 
 Scene_GameEnd.prototype.commandToTitle = function () {
@@ -26,8 +33,7 @@ Scene_GameEnd.prototype.commandToTitle = function () {
 Scene_LL_Title.prototype.createMenuButtons = function () {
     var x = 1000;
     var y = 330;
-
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         this._menuButtonSprite[i] = new Sprite_menuButtons();
         this.addChild(this._menuButtonSprite[i]);
         this._menuButtonSprite[i]._buttonId = i;
@@ -55,7 +61,7 @@ Scene_LL_Title.prototype.update = function () {
         this._flyPlayBgCounts++;
         if (this._flyPlayBgCounts >= 40) {
             if (this._menuButtonSprite) {
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < 5; i++) {
                     this._menuButtonSprite[i].show();
                 }
             }
@@ -63,13 +69,35 @@ Scene_LL_Title.prototype.update = function () {
             this._flyPlayBg = false;
             this._commandWindow.open();
             this._commandWindow.activate();
-			if (DataManager.isAnySavefileExists())
-				this._commandWindow.select(1);
-			else
-				this._commandWindow.select(0);
+            if (Imported.FlyCat_PictureTitle) {
+                for (let i = 0; i < this._pictureTitle.length; i++) {
+                    this._pictureTitle[i].show();
+                };
+            }
+            if (DataManager.isAnySavefileExists()) {
+                this._commandWindow.select(1);
+            }
+            else {
+                this._commandWindow.select(0);
+            }
             this._flyPlayBgCounts = 0;
         }
     }
+};
+var old_Scene_LL_Title_createCommandWindow = Scene_LL_Title.prototype.createCommandWindow;
+Scene_LL_Title.prototype.createCommandWindow = function () {
+    old_Scene_LL_Title_createCommandWindow.call(this);
+    this._commandWindow.setHandler('url', this.gotoUrl.bind(this));
+};
+Scene_LL_Title.prototype.gotoUrl = function () {
+    const url = FlyCat.SceneTitle.URL;
+    if (!Utils.isNwjs()) {
+        window.open(url, '_blank');
+    } else {
+        var type = (process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open');
+        require('child_process').exec(type + ' ' + url);
+    };
+    this._commandWindow.activate();
 };
 Window_TitleCommand.prototype.makeCommandList = function () {
     const continueEnabled = this.isContinueEnabled();
@@ -77,8 +105,8 @@ Window_TitleCommand.prototype.makeCommandList = function () {
     this.addCommand(TextManager.continue_, "loadGame", continueEnabled);
     // this.addCommand(TextManager.options, "options");
     this.addCommand('回忆录', "reading", true);
+    this.addCommand('网站', "url", true);
     this.addCommand('退出', "exit", true);
-
 };
 /*LOGO精灵等*/
 Sprite_TitleBg.prototype.initialize = function (static) {

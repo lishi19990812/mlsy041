@@ -284,6 +284,15 @@ Game_System.prototype.addChildren = function () {
     this._children.lingGen = lingGen[Math.floor((Math.random() * lingGen.length))];
     this._children.xingGe = xingGe[Math.floor((Math.random() * xingGe.length))];
     this._children.xingBie = xingBie[Math.floor((Math.random() * xingBie.length))];
+    if (Imported.FlyCat_LL_SM) {
+        if (this._children.xingBie == '男') {
+            const number = $gameVariables.value(FlyCat.LL_Sm.boyValue) + 1;
+            $gameVariables.setValue(FlyCat.LL_Sm.boyValue, number)
+        } else {
+            const number = $gameVariables.value(FlyCat.LL_Sm.girlValue) + 1;
+            $gameVariables.setValue(FlyCat.LL_Sm.girlValue, number)
+        }
+    }
     this._children.haoGanDu = 0;
     this._children.xianLing = 0;
     this._children.waiMao = Math.floor((Math.random() * 500) + 1);

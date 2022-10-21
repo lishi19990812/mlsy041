@@ -1,11 +1,11 @@
 {
-    "name": "rmmz-game",
+    "name": "lsy041",
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb",
     "window": {
-        "title": "绯色修仙录V0.386",
-        "width": 1920,
-        "height": 1080,
+        "title": "（041搬运）绯色修仙录V0.4143",
+        "width": 1280,
+        "height": 720,
         "position": "center",
         "icon": "icon/icon.png"
     }

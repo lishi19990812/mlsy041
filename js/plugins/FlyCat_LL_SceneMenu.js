@@ -146,10 +146,6 @@
  * @desc 魅力值变量对应的系统变量
  * @type variable
  * 
- * @param vitValue
- * @text 体力值变量选择
- * @desc 体力值变量对应的系统变量
- * @type variable
  * 
  * @param xmValue
  * @text 心魔值变量选择
@@ -392,7 +388,7 @@ FlyCat.LL_SceneMenu.pregnancyValue = Number(FlyCat.LL_SceneMenu.parameters['preg
 FlyCat.LL_SceneMenu.yearVariable = Number(FlyCat.LL_SceneMenu.parameters['yearVariable']);
 FlyCat.LL_SceneMenu.monthVariable = Number(FlyCat.LL_SceneMenu.parameters['monthVariable']);
 FlyCat.LL_SceneMenu.sexValue = Number(FlyCat.LL_SceneMenu.parameters['sexValue']);
-FlyCat.LL_SceneMenu.vitValue = Number(FlyCat.LL_SceneMenu.parameters['vitValue']);
+//FlyCat.LL_SceneMenu.vitValue = Number(FlyCat.LL_SceneMenu.parameters['vitValue']);
 FlyCat.LL_SceneMenu.xmValue = Number(FlyCat.LL_SceneMenu.parameters['xmValue']);
 FlyCat.LL_SceneMenu.dlSwitchId_1 = Number(FlyCat.LL_SceneMenu.parameters['dlSwitchId_1']);
 FlyCat.LL_SceneMenu.dlSwitchId_2 = Number(FlyCat.LL_SceneMenu.parameters['dlSwitchId_2']);
@@ -409,6 +405,18 @@ if (FlyCat.LL_SceneMenu.levelNames) {
     }
     FlyCat.LL_SceneMenu.levelNames.sort((a, b) => { return b.level - a.level })
 };
+
+
+
+Window_EquipCommand.prototype.makeCommandList = function () {//最强装备
+    this.addCommand(TextManager.equip2, "equip");
+    // this.addCommand(TextManager.optimize, "optimize");
+    this.addCommand(TextManager.clear, "clear");
+};
+Window_EquipCommand.prototype.maxCols = function () {
+    return 2;
+};
+
 Scene_GameEnd.prototype.commandToTitle = function () {
     this.fadeOutAll();
     SceneManager.goto(Scene_LL_Title);
@@ -1098,20 +1106,20 @@ Window_MenuLLStatus.prototype.refresh = function () {
     y += 40;
     this.contents.fillRect(0, y, width, 3, ColorManager.textColor(1));
     y += 7;
-    if (FlyCat.LL_SceneMenu.vitValue) {
-        var vitValue = $gameVariables.value(FlyCat.LL_SceneMenu.vitValue);
-        if (vitValue < 0) var vitValue = 0;
-        if (vitValue > 99) var vitValue = 100;
-    }
-    else {
-        var vitValue = 0;
-    }
-    this._valueColor = [];
-    this._valueColor = [4, 5, 15];
-    var textW = this.textWidth('体力值：');
-    this.changeTextColor(ColorManager.textColor(this._valueColor[0]));
-    this.drawText("体力值：", x, y, width, "left");
-    this.textFillRect(x, y, textW, vitValue, 100)
+    // if (FlyCat.LL_SceneMenu.vitValue) {
+    //     var vitValue = $gameVariables.value(FlyCat.LL_SceneMenu.vitValue);
+    //     if (vitValue < 0) var vitValue = 0;
+    //     if (vitValue > 99) var vitValue = 100;
+    // }
+    // else {
+    //     var vitValue = 0;
+    // }
+    // this._valueColor = [];
+    // this._valueColor = [4, 5, 15];
+    // var textW = this.textWidth('体力值：');
+    // this.changeTextColor(ColorManager.textColor(this._valueColor[0]));
+    // this.drawText("体力值：", x, y, width, "left");
+    // this.textFillRect(x, y, textW, vitValue, 100)
 
     if (FlyCat.LL_SceneMenu.corruptValue) {
         var corruptValue = $gameVariables.value(FlyCat.LL_SceneMenu.corruptValue);
@@ -1125,7 +1133,7 @@ Window_MenuLLStatus.prototype.refresh = function () {
     else {
         var corruptValue = 0;
     }
-    y += 28;
+    // y += 28;
     this._valueColor = [2, 10, 15];
     this.changeTextColor(ColorManager.textColor(this._valueColor[0]));
     this.drawText("堕落值：", x, y, width, "left");
@@ -1157,8 +1165,14 @@ Window_MenuLLStatus.prototype.refresh = function () {
     this.drawText("魅力值：" + sexValue, x, y, width, "left");
     if (FlyCat.LL_SceneMenu.pregnancyValue) {
         var pregnancyValue = $gameVariables.value(FlyCat.LL_SceneMenu.pregnancyValue);
-        if (pregnancyValue < 0) var pregnancyValue = 0;
-        if (pregnancyValue > 99) var pregnancyValue = 100;
+        if (pregnancyValue < 0) {
+            var pregnancyValue = 0;
+            $gameVariables.setValue(FlyCat.LL_SceneMenu.pregnancyValue, 0)
+        }
+        if (pregnancyValue > 99) {
+            var pregnancyValue = 100;
+            $gameVariables.setValue(FlyCat.LL_SceneMenu.pregnancyValue, 100)
+        }
     }
     else {
         var pregnancyValue = 0;

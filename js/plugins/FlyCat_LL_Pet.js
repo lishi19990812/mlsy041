@@ -15,6 +15,18 @@
  * @text 选择想要添加宠物
  * @type actor
  * 
+ * @command upLevelPetActor
+ * @text 选择进化宠物
+ * @desc 选择进化宠物
+ *
+ * @arg actorId
+ * @text 进化的宠物
+ * @type actor
+ * 
+ * @arg actorUpId
+ * @text 进化后的宠物
+ * @type actor
+ * 
  * @help
  * 2021.2.22
  * 1.UI布局处理
@@ -53,6 +65,40 @@ PluginManager.registerCommand('FlyCat_LL_Pet', 'addPetActor', args => {
         $gameSystem._petActorList.push(pet)
     }
 });
+PluginManager.registerCommand('FlyCat_LL_Pet', 'upLevelPetActor', args => {
+    const petId = Number(args.actorId);
+    $gameParty.removeActor(petId)
+    for (let i = 0; i < $gameSystem._petActorList.length; i++) {
+        if ($gameSystem._petActorList[i].id == petId) {
+            $gameSystem._petActorList.splice(i, 1);
+            break;
+        }
+    }
+    const newpet = $dataActors[args.actorUpId];
+    const index = $gameSystem._petActorList.indexOf(newpet);
+    if (index == -1) {
+        $gameSystem._petActorList.push(newpet);
+    }
+});
+FlyCat.LL_Pet.Scene_Item_onActorOk = Scene_Item.prototype.onActorOk
+Scene_Item.prototype.onActorOk = function () {
+    if (this.item() && this.item().meta.指定角色) {
+        const index = this._actorWindow.index();
+        if (index >= 0) {
+            const actor = this._actorWindow.actor(index);
+            if (actor) {
+                const actorId = Number(this.item().meta.指定角色);
+                if (actor._actorId != actorId) {
+                    SoundManager.playBuzzer();
+                    return;
+                }
+            }
+
+        }
+    }
+    FlyCat.LL_Pet.Scene_Item_onActorOk.call(this)
+};
+
 
 Game_Party.prototype.maxBattleMembers = function () {
     return 2;
